@@ -51,14 +51,15 @@ easyFacebook.prototype.getLoginStatus=function(){
 	FB.getLoginStatus(function(response){
 		if (response.status==='connected'){
 			FB.api('me/permissions',function(response){
-				var perms=self.fbLoginOptions.scope.split(',');
-				var allPerms=true;
-				for (i=0;i<perms.length;i++){
-					if (!response.data[0][perms[i]]){
-						allPerms=false;
+				var perms=self.fbLoginOptions.scope;
+				var perm;
+				for (i=0;i<response.data;i++){
+					perm=response.data[i];
+					if (perm.status=='granted'){
+						perms=perms.replace(perm.permission,'');
 					}
 				}
-				if (!allPerms){
+				if (perms.replace(/,/g,'').length>0){
 					self.fbLogin();
 				}
 				else {
