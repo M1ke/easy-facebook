@@ -13,7 +13,7 @@
     "dependencies": {
         "jquery": "git@github.com:m1ke/jquery-bower.git"
     },
-    "description": "Easy Facebook",
+    "description": "Provides quick hooks into common methods of the Facebook JS SDK",
     "files": [
         "easy-facebook.js"
     ]

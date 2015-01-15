@@ -1,3 +1,5 @@
+// DEV we need to upgrade this to function() scope, remove use of prototype and use as singleton object
+
 var easyFacebook=function(init,loginEl){
 	this.url='';
 	this.user=0;
