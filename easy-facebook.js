@@ -53,7 +53,7 @@ easyFacebook.prototype.getLoginStatus=function(){
 			FB.api('me/permissions',function(response){
 				var perms=self.fbLoginOptions.scope;
 				var perm;
-				for (i=0;i<response.data;i++){
+				for (i=0;i<response.data.length;i++){
 					perm=response.data[i];
 					if (perm.status=='granted'){
 						perms=perms.replace(perm.permission,'');
