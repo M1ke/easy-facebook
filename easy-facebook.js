@@ -1,4 +1,4 @@
-var fbQuickApp=function(init,loginEl){
+var easyFacebook=function(init,loginEl){
 	this.url='';
 	this.user=0;
 	this.fbLoginOptions={scope:'email'};
@@ -10,24 +10,24 @@ var fbQuickApp=function(init,loginEl){
 		this.getLoginStatus();
 	}
 };
-fbQuickApp.prototype.onClickLogin=function(){
+easyFacebook.prototype.onClickLogin=function(){
 	$(document).on('click',this.loginEl,{self:this},this.clickLoginEvent);
 };
-fbQuickApp.prototype.clickLogin=function($link){
+easyFacebook.prototype.clickLogin=function($link){
 	$link.click({self:this},this.clickLoginEvent);
 };
-fbQuickApp.prototype.clickLoginEvent=function(e){
+easyFacebook.prototype.clickLoginEvent=function(e){
 	e.preventDefault();
 	$(this).html('Connecting to Facebook&hellip;');
 	e.data.self.fbLogin($(this));
 };
-fbQuickApp.prototype.dialog=function(request,callback){
+easyFacebook.prototype.dialog=function(request,callback){
 	var self=this;
 	FB.ui(request,function(response){
 		callback.call(self,response);
 	});
 };
-fbQuickApp.prototype.fbLogin=function($link){
+easyFacebook.prototype.fbLogin=function($link){
 	var self=this;
 	FB.login(function(response){
 		if (response.status=='connected'){
@@ -38,13 +38,13 @@ fbQuickApp.prototype.fbLogin=function($link){
 		}
 	},this.fbLoginOptions);
 };
-fbQuickApp.prototype.friendRequest=function(details,callback){
+easyFacebook.prototype.friendRequest=function(details,callback){
 	// message
 	details=$.extend(this.requestDefaults,details);
 	details.method='apprequests';
 	this.dialog(details,callback);
 };
-fbQuickApp.prototype.getLoginStatus=function(){
+easyFacebook.prototype.getLoginStatus=function(){
 	var self=this;
 	FB.getLoginStatus(function(response){
 		if (response.status==='connected'){
@@ -66,7 +66,7 @@ fbQuickApp.prototype.getLoginStatus=function(){
 		}
 	});
 };
-fbQuickApp.prototype.share=function(url,callback){
+easyFacebook.prototype.share=function(url,callback){
 	var params={
 		href:url,
 		method:'share'
@@ -74,23 +74,23 @@ fbQuickApp.prototype.share=function(url,callback){
 	this.dialog(params,callback);
 };
 // DEPRECATED
-fbQuickApp.prototype.postToFeed=function(post,callback){
+easyFacebook.prototype.postToFeed=function(post,callback){
 	this.share(post,callback);
 };
-fbQuickApp.prototype.userLoggedIn=function(){
+easyFacebook.prototype.userLoggedIn=function(){
 	$(this.loginEl).parent().html(this.textLoggedIn).addClass(this.classLoggedIn);
 	$('.fb-app').fadeIn().trigger('fb-login');
 };
-fbQuickApp.prototype.userNotLoggedIn=function($link){
+easyFacebook.prototype.userNotLoggedIn=function($link){
 	$link.text('Please try again');
 };
 
 /* HOW TO USE
 
 var fbYourApp=function(){
-	fbQuickApp.call(this,true);
+	easyFacebook.call(this,true);
 };
-fbYourApp.prototype=new fbQuickApp();
+fbYourApp.prototype=new easyFacebook();
 fbYourApp.prototype.constructor=fbYourApp;
 
 // Alter the .prototype.userLoggedIn and .prototype.userNotLoggedIn functions to change log in
