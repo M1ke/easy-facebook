@@ -11,7 +11,8 @@
         }
     ],
     "dependencies": {
-        "jquery": "git@github.com:m1ke/jquery-bower.git"
+        "jquery": "https://github.com/m1ke/jquery-bower.git"
+        ,"js-utils": "https://github.com/m1ke/js-utils.git"
     },
     "description": "Provides quick hooks into common methods of the Facebook JS SDK",
     "files": [
