@@ -50,10 +50,10 @@ var easyFacebook = (function(){
 	function _fbLogin($link){
 		FB.login(function(response){
 			if (response.status=='connected'){
-				singleton.userLoggedIn($link);
+				singleton.userLoggedIn(response.authResponse.accessToken, $link);
 			}
 			else {
-				singleton.userNotLoggedIn($link);
+				singleton.userNotLoggedIn(response.status, $link);
 			}
 		}, _fbLoginOptions);
 	}
@@ -143,10 +143,10 @@ var easyFacebook = (function(){
 		,feed: _feed
 		,send: _send
 		,share: _share
-		,userLoggedIn: function(token){
+		,userLoggedIn: function(token, $link){
 
 		}
-		,userNotLoggedIn: function(token){
+		,userNotLoggedIn: function(status, $link){
 
 		}
 		,friendRequest: function(){
