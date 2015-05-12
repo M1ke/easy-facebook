@@ -50,10 +50,10 @@ var easyFacebook = (function(){
 	function _fbLogin($link){
 		FB.login(function(response){
 			if (response.status=='connected'){
-				_userLoggedIn($link);
+				singleton.userLoggedIn($link);
 			}
 			else {
-				_userNotLoggedIn($link);
+				singleton.userNotLoggedIn($link);
 			}
 		}, _fbLoginOptions);
 	}
@@ -144,6 +144,9 @@ var easyFacebook = (function(){
 		,send: _send
 		,share: _share
 		,userLoggedIn: function(token){
+
+		}
+		,userNotLoggedIn: function(token){
 
 		}
 		,friendRequest: function(){
