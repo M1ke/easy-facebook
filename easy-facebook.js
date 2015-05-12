@@ -137,7 +137,8 @@ var easyFacebook = (function(){
 		,init: _init
 		,setLoginEl: _setLoginEl
 		,setInit: _setInit
-		,click: _click_LoginEvent
+		,clickLogin: _clickLogin
+		,click_Event: _click_LoginEvent
 		,dialog: _dialog
 		,feed: _feed
 		,send: _send
