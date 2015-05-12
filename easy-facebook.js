@@ -48,7 +48,7 @@ var easyFacebook = (function(){
 	}
 
 	function _fbLogin($link){
-		FB.login(function(response){
+		FB && FB.login(function(response){
 			if (response.status=='connected'){
 				singleton.userLoggedIn(response.authResponse.accessToken, $link);
 			}
@@ -59,13 +59,13 @@ var easyFacebook = (function(){
 	}
 
 	function _dialog(request, callback){
-		FB.ui(request, function(response){
+		FB && FB.ui(request, function(response){
 			callback && callback.call(null, response);
 		});
 	}
 
 	function _getLoginStatus(){
-		FB.getLoginStatus(function(response){
+		FB && FB.getLoginStatus(function(response){
 			if (response.status!=='connected'){
 				return false;
 			}
