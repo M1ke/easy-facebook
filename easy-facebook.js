@@ -34,7 +34,7 @@ var easyFacebook = (function(){
 	}
 
 	function _onClickLogin(){
-		$(document).on('click', loginEl, _click_LoginEvent);
+		$(document).on('click', _loginEl, _click_LoginEvent);
 	}
 
 	function _clickLogin($link){
