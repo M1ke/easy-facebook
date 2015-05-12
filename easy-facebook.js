@@ -107,7 +107,6 @@ var easyFacebook = (function(){
 			,picture: null
 			,source: null
 			,name: null
-			,caption: null
 			,description: null
 			,properties: null
 			,actions: null
