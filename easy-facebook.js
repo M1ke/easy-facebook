@@ -88,12 +88,31 @@ var easyFacebook = (function(){
 		});
 	}
 
-	function _feed(link, caption, callback){
-		var params = {
+	function _feed(link, caption, paramsOrCallback, callback){
+		switch (typeof paramsOrCallback){
+			case 'function':
+				callback = paramsOrCallback;
+				params = {};
+			break;
+			case 'object':
+				params = paramsOrCallback;
+			break;
+			default:
+				params = {};
+		}
+		params = $.extend({
 			method: 'feed'
 			,link: link
 			,caption: caption
-		}
+			,picture: null
+			,source: null
+			,name: null
+			,caption: null
+			,description: null
+			,properties: null
+			,actions: null
+			,ref: null
+		}, params);
 		_dialog(params, callback);
 	}
 
