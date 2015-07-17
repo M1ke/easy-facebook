@@ -131,8 +131,22 @@ var easyFacebook = (function(){
 		_dialog(params, callback);
 	}
 
+	function _setScope(scope){
+		_fbLoginOptions.scope = scope;
+	}
+
+	function _appendScope(scope){
+		_fbLoginOptions.scope += scope;
+	}
+
+	function _getScope(){
+		return _fbLoginOptions.scope;
+	}
+
 	singleton = {
-		scope: _fbLoginOptions.scope
+		getScope: _getScope
+		,setScope: _setScope
+		,appendScope: _appendScope
 		,init: _init
 		,setLoginEl: _setLoginEl
 		,setInit: _setInit
