@@ -132,10 +132,19 @@ var easyFacebook = (function(){
 	}
 
 	function _setScope(scope){
+		if (typeof scope!='string'){
+			scope = scope.join(',');
+		}
 		_fbLoginOptions.scope = scope;
 	}
 
 	function _appendScope(scope){
+		if (typeof scope!='string'){
+			scope = scope.join(',');
+		}
+		if (scope[0]!==','){
+			scope = ','+scope;
+		}
 		_fbLoginOptions.scope += scope;
 	}
 
