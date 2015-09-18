@@ -29,7 +29,7 @@ var easyFacebook = (function(){
 		_initFunctions.run();
 		if (_loginOnInit){
 			_onClickLogin();
-			_getLoginStatus();
+			_getLogin();
 		}
 	}
 
@@ -48,12 +48,16 @@ var easyFacebook = (function(){
 	}
 
 	function _fbLogin($link){
+		_fbLoginBase(singleton.userLoggedIn, singleton.userNotLoggedIn, $link);
+	}
+
+	function _fbLoginBase(done, fail, $link){
 		FB && FB.login(function(response){
 			if (response.status=='connected'){
-				singleton.userLoggedIn(response.authResponse.accessToken, $link);
+				done(response.authResponse.accessToken, $link);
 			}
 			else {
-				singleton.userNotLoggedIn(response.status, $link);
+				fail(response.status, $link);
 			}
 		}, _fbLoginOptions);
 	}
@@ -64,27 +68,39 @@ var easyFacebook = (function(){
 		});
 	}
 
-	function _getLoginStatus(){
+	function _getLoginStatus(opts){
+		opts.scope || (opts.scope = _fbLoginOptions.scope);
 		FB && FB.getLoginStatus(function(response){
 			if (response.status!=='connected'){
 				return false;
 			}
-			FB.api('me/permissions',function(response){
-				var perms = _fbLoginOptions.scope
-					,perm;
-				for (var i=0; i<response.data.length; i++){
-					perm = response.data[i];
-					if (perm.status=='granted'){
-						perms = perms.replace(perm.permission,'');
-					}
+			_checkPermissions(opts);
+		});
+	}
+
+	function _getLogin(){
+		_getLoginStatus({
+			done: singleton.userLoggedIn
+			,fail: _fbLogin
+		});
+	}
+
+	function _checkPermissions(opts){
+		var scope = opts.scope;
+		FB && FB.api('me/permissions', function(response){
+			var item;
+			for (var i=0; i<response.data.length; i++){
+				item = response.data[i];
+				if (item.status=='granted'){
+					scope = scope.replace(item.permission, '');
 				}
-				if (perms.replace(/,/g,'').length>0){
-					_fbLogin();
-				}
-				else {
-					singleton.userLoggedIn(FB.getAccessToken());
-				}
-			});
+			}
+			if (scope.replace(/,/g, '').length>0){
+				opts.fail();
+			}
+			else {
+				opts.done(FB.getAccessToken());
+			}
 		});
 	}
 
@@ -165,6 +181,9 @@ var easyFacebook = (function(){
 		,feed: _feed
 		,send: _send
 		,share: _share
+		,getLogin: _getLoginStatus
+		,login: _fbLogin
+		,loginBase: _fbLoginBase
 		,userLoggedIn: function(token, $link){
 
 		}
