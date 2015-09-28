@@ -9,7 +9,7 @@ var easyFacebook = (function(){
 		,_fbLoginOptions = {scope:'email'}
 		,_classLoggedIn = 'logged-in'
 		,_loginEl = 'a.fb-login'
-		,_textLoggedIn = 'Logged in with Facebook'
+		,_textLoggedIn = 'Logged in'
 		,_loginOnInit = false
 		,_initFunctions = new functionQ;
 
@@ -43,7 +43,7 @@ var easyFacebook = (function(){
 
 	function _click_LoginEvent(event){
 		event.preventDefault();
-		$(this).html('Connecting to Facebook&hellip;');
+		$(this).html('Connecting&hellip;');
 		_fbLogin($(this));
 	}
 
