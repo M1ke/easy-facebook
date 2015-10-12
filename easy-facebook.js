@@ -9,7 +9,7 @@ var easyFacebook = (function(){
 		,_fbLoginOptions = {scope:'email'}
 		,_classLoggedIn = 'logged-in'
 		,_loginEl = 'a.fb-login'
-		,_textLoggedIn = 'Logged in'
+		,_textLoggedIn = 'Logged in with Facebook'
 		,_loginOnInit = false
 		,_initFunctions = new functionQ;
 
@@ -33,8 +33,9 @@ var easyFacebook = (function(){
 		}
 	}
 
-	function _onClickLogin(){
-		$(document).on('click', _loginEl, _click_LoginEvent);
+	function _onClickLogin(el){
+		el || (el = _loginEl);
+		$('body').on('click', el, _click_LoginEvent);
 	}
 
 	function _clickLogin($link){
@@ -72,6 +73,7 @@ var easyFacebook = (function(){
 		opts.scope || (opts.scope = _fbLoginOptions.scope);
 		FB && FB.getLoginStatus(function(response){
 			if (response.status!=='connected'){
+				opts.fail && opts.fail();
 				return false;
 			}
 			_checkPermissions(opts);
@@ -184,6 +186,7 @@ var easyFacebook = (function(){
 		,getLogin: _getLoginStatus
 		,login: _fbLogin
 		,loginBase: _fbLoginBase
+		,onClickLogin: _onClickLogin
 		,userLoggedIn: function(token, $link){
 
 		}
@@ -193,6 +196,7 @@ var easyFacebook = (function(){
 		,friendRequest: function(){
 			throw "The friendRequest method is no longer available";
 		}
+		,loginEl: _loginEl
 	};
 
 	return singleton;
