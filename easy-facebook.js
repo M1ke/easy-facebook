@@ -48,11 +48,16 @@ var easyFacebook = (function(){
 		_fbLogin($(this));
 	}
 
-	function _fbLogin($link){
-		_fbLoginBase(singleton.userLoggedIn, singleton.userNotLoggedIn, $link);
+	function _fbLogin($link, rerequest){
+		_fbLoginBase(singleton.userLoggedIn, singleton.userNotLoggedIn, $link, rerequest);
 	}
 
-	function _fbLoginBase(done, fail, $link){
+	function _fbLoginBase(done, fail, $link, rerequest){
+		var options = _fbLoginOptions;
+		if (rerequest){
+			// set auth_type as string rerequest to indicate that re-asking user for (what may be) previously declined permissions
+			options.auth_type = 'rerequest';
+		}
 		FB && FB.login(function(response){
 			if (response.status=='connected'){
 				done(response.authResponse.accessToken, $link);
@@ -60,7 +65,7 @@ var easyFacebook = (function(){
 			else {
 				fail(response.status, $link);
 			}
-		}, _fbLoginOptions);
+		}, options);
 	}
 
 	function _dialog(request, callback){
