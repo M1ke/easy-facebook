@@ -137,7 +137,7 @@ var easyFacebook = (function(){
 		var params = {
 			method: 'send'
 			,link: link
-		}
+		};
 		_dialog(params, callback);
 	}
 
@@ -145,7 +145,7 @@ var easyFacebook = (function(){
 		var params = {
 			method: 'share'
 			,href: href
-		}
+		};
 		_dialog(params, callback);
 	}
 
@@ -174,6 +174,7 @@ var easyFacebook = (function(){
 		getScope: _getScope
 		,setScope: _setScope
 		,appendScope: _appendScope
+		,addToInit: _addToInit
 		,init: _init
 		,setLoginEl: _setLoginEl
 		,setInit: _setInit
