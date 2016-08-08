@@ -11,7 +11,8 @@ var easyFacebook = (function(){
 		,_loginEl = 'a.fb-login'
 		,_textLoggedIn = 'Logged in with Facebook'
 		,_loginOnInit = false
-		,_initFunctions = new functionQ;
+		,_initFunctions = new functionQ
+		,_hasDoneInit = false;
 
 	function _setLoginEl(setLoginEl){
 		_loginEl = setLoginEl;
@@ -23,6 +24,9 @@ var easyFacebook = (function(){
 
 	function _addToInit(fn){
 		_initFunctions.wrap(fn, singleton);
+		if (_hasDoneInit){
+			_initFunctions.run();
+		}
 	}
 
 	function _init(){
@@ -31,6 +35,7 @@ var easyFacebook = (function(){
 			_onClickLogin();
 			_getLogin();
 		}
+		_hasDoneInit = true;
 	}
 
 	function _onClickLogin(el){
